@@ -1,0 +1,12 @@
+/imagenes
+/__pycache__
+/venv
+.env
+yolov8n.pt
+models/__pycache__
+mongo/__pycache__
+routes/__pycache__
+utils/__pycache__
+
+.env
+.env.local

@@ -25,7 +25,7 @@ IMAGENES_ANALIZAR = "imagenes/analizar"
 # --------------------------
 # Parámetros de video
 # --------------------------
-FRAME_SKIP = 2
+FRAME_SKIP = 5
 DOWNSCALE = 0.6
 
 # --------------------------

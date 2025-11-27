@@ -64,6 +64,7 @@ def get_cara_id(cara_id: str) -> Optional[Cara]:
 
 # ----------------- GET BY PATH -----------------
 def get_cara_path(path: str) -> Optional[Cara]:
+    print("Path buscar: ", path)
     doc = caras_col.find_one({"path": path})
     if not doc:
         return None

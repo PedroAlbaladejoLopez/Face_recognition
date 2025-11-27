@@ -1,7 +1,9 @@
+from typing import Optional
+
 class Cara:
-    def __init__(self, id: str, path: str = ""):
+    def __init__(self, id: Optional[str], path: str = ""):
         self.id = id
-        self.path = path  # corregido
+        self.path = path
 
     def to_dict(self):
         return {

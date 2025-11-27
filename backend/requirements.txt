@@ -18,7 +18,6 @@ torchaudio==2.3.0
 # -------------------------
 # Incluye modelos de reconocimiento facial de ageitgey
 git+https://github.com/ageitgey/face_recognition_models.git
-dlib==19.24.1
 face_recognition==1.3.0
 
 # -------------------------
@@ -45,3 +44,6 @@ pymongo==4.6.1
 # Carga de entorno (.env)
 # -------------------------
 python-dotenv==1.2.1
+
+
+Flask-Cors==4.1.2

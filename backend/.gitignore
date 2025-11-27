@@ -10,4 +10,3 @@ utils/__pycache__
 
 .env
 .env.local
-frontend/.vscode

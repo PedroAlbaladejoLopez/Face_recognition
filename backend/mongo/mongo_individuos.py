@@ -1,5 +1,6 @@
 from typing import List, Dict, Optional
 from bson import ObjectId
+from numpy import append
 from pymongo import MongoClient
 from models.individuo import Individuo
 from models.cara import Cara
@@ -11,6 +12,24 @@ from mongo.mongo_caras import get_cara_id, get_cara_path
 client = MongoClient("mongodb://localhost:27017/")
 db = client["reconocimiento_facial"]
 individuos_col = db["individuos"]
+
+# ----------------- GET ALL INDIVIDUOS -----------------
+def get_individuos() -> List[Individuo]:
+    """
+    Retorna todos los individuos en la colección como objetos Individuo.
+    """
+    docs = individuos_col.find()
+    individuos: List[Individuo] = []
+
+    for doc in docs:
+        doc["id"] = str(doc["_id"])
+        del doc["_id"]
+        individuo_obj = Individuo.from_dict(doc)
+        if individuo_obj:
+            individuos.append(individuo_obj)
+
+    return individuos
+
 
 # ----------------- CREATE -----------------
 def crear_individuo(individuo: Individuo) -> Optional[Individuo]:
@@ -116,17 +135,21 @@ def consultar_caras_individuo(individuo_id: str) -> List[Cara]:
         obj_id = ObjectId(individuo_id)
     except Exception:
         return []
-
+    print("Obteniendo caras de usuario_obj_id: ", obj_id)
     doc = individuos_col.find_one({"_id": obj_id})
+    print("Individuo: ", doc)
     if not doc:
         return []
 
-    caras_paths = doc.get("caras", [])
+    caras_id = doc.get("caras", [])
+    print("Caras_id: ", caras_id)
     caras_objs: List[Cara] = []
-    for path in caras_paths:
-        cara = get_cara_path(path)
+    for id in caras_id:
+        cara = get_cara_id(id)
+        print("cara: ", cara)
         if cara:
             caras_objs.append(cara)
+    print("Caras del individuo: ", caras_objs)
     return caras_objs
 
 # ----------------- BUSCAR POR CARA -----------------

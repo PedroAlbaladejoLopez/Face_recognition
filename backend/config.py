@@ -92,6 +92,7 @@ def load_reference_encodings():
         reference_names = []
         logger.warning("[WARN] No se encontraron encodings válidos.")
 
+
 # --------------------------
 # Cargar modelo YOLO
 # --------------------------
@@ -103,6 +104,7 @@ def load_yolo_model(model_path: str = "yolov8n.pt"):
     except Exception as e:
         yolo_model = None
         logger.error(f"[ERROR] No se pudo cargar YOLO: {e}")
+
 
 # --------------------------
 # Conexión a MongoDB
@@ -120,6 +122,7 @@ def test_mongo_connection(uri="mongodb://localhost:27017/", db_name="reconocimie
         mongo_db = None
         logger.error(f"[ERROR] No se pudo conectar a MongoDB: {e}")
 
+
 # --------------------------
 # Obtener modelos globales
 # --------------------------
@@ -127,6 +130,43 @@ def get_models():
     if kdtree is None:
         raise RuntimeError("KDTree no cargado todavía (sin encodings).")
     return kdtree, reference_names, yolo_model
+
+
+# --------------------------
+# Agregar encoding dinámicamente
+# --------------------------
+def add_reference_encoding(cara_path: str):
+    """
+    Agrega una nueva cara al KDTree y a reference_names.
+    """
+    global kdtree, reference_names
+
+    import os
+    import numpy as np
+    import face_recognition
+    from config import read_image_safe
+
+    if not os.path.exists(cara_path):
+        raise FileNotFoundError(f"No se encontró la imagen: {cara_path}")
+
+    img_rgb = read_image_safe(cara_path)
+    encs = face_recognition.face_encodings(img_rgb)
+
+    if len(encs) != 1:
+        raise ValueError("La imagen debe contener exactamente una cara")
+
+    new_enc = encs[0]
+
+    if kdtree is None:
+        # Primer encoding
+        kdtree = KDTree(np.array([new_enc]))
+        reference_names = [os.path.basename(cara_path)]
+    else:
+        # Agregar al KDTree existente
+        all_encs = np.vstack([kdtree.data, new_enc])
+        kdtree = KDTree(all_encs)
+        reference_names.append(os.path.basename(cara_path))
+
 
 # --------------------------
 # Inicialización automática

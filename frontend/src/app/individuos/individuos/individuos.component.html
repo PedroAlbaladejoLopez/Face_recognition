@@ -25,28 +25,6 @@
     </div>
   </div>
 
-  <hr>
-
-  <!-- Detectar imagen -->
-  <div class="card p-3 mb-3">
-    <h3>Detectar en imagen</h3>
-    <input type="file" class="form-control mb-2" (change)="onFileSelectedDetect($event)">
-    <button class="btn btn-success mt-2" (click)="detectarImagen()">Detectar</button>
-
-    <div *ngIf="detectedIndividuos.length > 0" class="mt-3">
-      <h5>Individuos detectados:</h5>
-      <ul>
-        <li *ngFor="let ind of detectedIndividuos">
-          {{ind.nombre}} {{ind.apellido1}} {{ind.apellido2}}
-        </li>
-      </ul>
-    </div>
-
-    <div *ngIf="detectedImageUrl" class="mt-3">
-      <h5>Imagen detectada:</h5>
-      <img [src]="detectedImageUrl" class="img-fluid" />
-    </div>
-  </div>
 
   <!-- Modal para editar individuo -->
   <div class="modal fade" id="modalEditar" tabindex="-1">

@@ -107,34 +107,4 @@ export class IndividuosComponent implements OnInit {
     console.log('Gestionar caras:', id);
   }
 
-  // --------------------------
-  // Detección de imagen
-  // --------------------------
-  onFileSelectedDetect(event: any) {
-    if (event.target.files && event.target.files.length > 0) {
-      this.selectedFileDetect = event.target.files[0];
-    }
-  }
-
-  detectarImagen() {
-    if (!this.selectedFileDetect) return;
-
-    const formData = new FormData();
-    formData.append('file', this.selectedFileDetect);
-
-    this.individuosService.detectarImagen(formData).subscribe((res: any) => {
-      // Guardar individuos detectados
-      this.detectedIndividuos = res.individuos_detectados || [];
-
-      // Guardar la ruta de la imagen anotada
-      if (res.frames_deteccion && res.frames_deteccion.length > 0) {
-        this.detectedImageUrl = `http://localhost:5000/${res.frames_deteccion[0].path.replace(/\\/g, '/')}`;
-      } else {
-        this.detectedImageUrl = null;
-      }
-
-      // Forzar Angular a actualizar la vista
-      this.cdr.detectChanges();
-    });
-  }
 }

@@ -1,0 +1,6 @@
+/* src/app/home/home.component/home.component.css */
+.container {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}

@@ -37,10 +37,11 @@ export class IndividuosService {
   return this.http.put(`${this.baseUrl}/modificar_individuo_con_cara`, formData);
 }
 // Nuevo método para detectar imagen
-detectarImagen(formData: FormData): Observable<any> {
-  return this.http.post(`${this.baseUrl}/detectar_imagen`, formData);
-}
-
-
+  detectarImagen(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/detectar_imagen`, formData);
+  }
+  detectarVideo(formData: FormData) {
+    return this.http.post(`${this.baseUrl}/detectar_video`, formData);
+  }
 
 }

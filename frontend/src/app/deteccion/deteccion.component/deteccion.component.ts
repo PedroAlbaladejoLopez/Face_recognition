@@ -25,11 +25,13 @@ export class DeteccionComponent {
   selectedFileDetect: File | null = null;
   detectedIndividuos: Individuo[] = [];
   detectedImageUrl: string | null = null;
+  objetosImagen: any[] = [];
 
   // ------------------ DETECCIÓN VIDEO ------------------
   selectedFileVideo: File | null = null;
   individuosVideo: IndividuoConFrames[] = [];
   framesVideo: FrameVideo[] = [];
+  objetosVideo: any[] = [];
 
   constructor(
     private individuosService: IndividuosService,
@@ -44,26 +46,24 @@ export class DeteccionComponent {
   }
 
   detectarImagen() {
-  if (!this.selectedFileDetect) return;
-  const formData = new FormData();
-  formData.append('file', this.selectedFileDetect);
+    if (!this.selectedFileDetect) return;
+    const formData = new FormData();
+    formData.append('file', this.selectedFileDetect);
 
-  this.individuosService.detectarImagen(formData).subscribe((res: any) => {
-    // Guardar la lista de individuos detectados
-    this.detectedIndividuos = res.individuos_detectados || [];
+    this.individuosService.detectarImagen(formData).subscribe((res: any) => {
+      this.detectedIndividuos = res.individuos_detectados || [];
+      this.objetosImagen = res.objetos || [];
 
-    // Tomar la primera imagen anotada
-    if (res.imagen_deteccion) {
-      this.detectedImageUrl = `http://localhost:5000/${res.imagen_deteccion}`;
-    } else {
-      this.detectedImageUrl = null;
-    }
+      if (res.imagen_deteccion) {
+        this.detectedImageUrl = `http://localhost:5000/${res.imagen_deteccion}`;
+      } else {
+        this.detectedImageUrl = null;
+      }
 
-    // Forzar actualización del template
-    this.cdr.detectChanges();
-  });
-}
-
+      // 🔹 Forzar actualización de la vista
+      this.cdr.detectChanges();
+    });
+  }
 
   // ================= VIDEO =================
   onFileSelectedVideo(event: any) {
@@ -78,20 +78,21 @@ export class DeteccionComponent {
     formData.append('file', this.selectedFileVideo);
 
     this.individuosService.detectarVideo(formData).subscribe((res: any) => {
-      // Guardar los frames de detección
       this.framesVideo = (res.frames_deteccion || []).map((f: any) => ({
         frame_path: `http://localhost:5000/${f.frame_path}`,
         individuo: f.individuo,
       }));
 
-      // Mapear individuos y asignar solo sus frames
+      this.objetosVideo = res.objetos || [];
+
+      // Mapear individuos y asignar sus frames
       this.individuosVideo = (res.individuos_detectados || []).map((ind: any) => {
         const indConFrames: IndividuoConFrames = { ...ind };
         indConFrames.frames = this.framesVideo.filter(fv => fv.individuo._id === ind._id);
-        indConFrames.carasUrls = []; // No mostrar caras
         return indConFrames;
       });
 
+      // 🔹 Forzar actualización de la vista
       this.cdr.detectChanges();
     });
   }

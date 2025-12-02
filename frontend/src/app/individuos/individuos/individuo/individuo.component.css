@@ -1,3 +1,7 @@
 button {
   margin-right: 5px;
 }
+.card {
+    display: inline-block !important;
+    width: max-content !important;
+}

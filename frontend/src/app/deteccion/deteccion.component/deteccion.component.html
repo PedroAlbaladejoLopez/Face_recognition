@@ -15,7 +15,7 @@
 
   <div *ngIf="detectedImageUrl" class="mt-3">
     <h5>Imagen detectada:</h5>
-    <img [src]="detectedImageUrl" class="img-fluid border rounded" />
+    <img [src]="detectedImageUrl" class="img-fluid border rounded imagen-detectada" />
   </div>
 
   <div *ngIf="objetosImagen.length > 0" class="mt-3">
@@ -35,13 +35,13 @@
   <div *ngIf="individuosVideo.length > 0" class="mt-3">
     <h5>Individuos detectados en el vídeo:</h5>
 
-    <div *ngFor="let ind of individuosVideo" class="card p-2 mb-3">
+    <div *ngFor="let ind of individuosVideo" class="card p-2 mb-3 individuo">
       <strong>Individuo:</strong> {{ind.nombre}} {{ind.apellido1}} {{ind.apellido2}}
 
       <!-- Frames -->
       <div class="mt-2" *ngIf="ind.frames && ind.frames.length > 0">
         <div *ngFor="let f of ind.frames" class="me-2 mb-2 d-inline-block">
-          <img [src]="f.frame_path" alt="frame" width="150" height="120" class="rounded border">
+          <img [src]="f.frame_path" alt="frame" width="400" height="230" class="rounded border">
         </div>
       </div>
     </div>

@@ -1,50 +1,45 @@
 <div class="container mt-3">
   <div class="container mt-3">
-  <!-- Formulario agregar -->
-  <div class="card p-3 mb-3">
-    <h3>Agregar un nuevo individuo</h3>
-    <input type="text" class="form-control mb-2" placeholder="Nombre" [(ngModel)]="individuoNuevo.nombre">
-    <input type="text" class="form-control mb-2" placeholder="Apellido 1" [(ngModel)]="individuoNuevo.apellido1">
-    <input type="text" class="form-control mb-2" placeholder="Apellido 2" [(ngModel)]="individuoNuevo.apellido2">
-    <input type="file" class="form-control mb-2" (change)="onFileSelected($event)">
-    <button class="btn btn-success" (click)="agregarIndividuo()">Agregar Individuo</button>
-  </div>
-
-  <hr>
-
-  <!-- Lista de individuos -->
-  <div class="card p-3 mb-3">
-    <h3>Lista de Individuos</h3>
-    <div *ngFor="let individuo of individuos">
-      <app-individuo
-        [individuo]="individuo"
-        (eliminar)="eliminarIndividuo($event)"
-        (editar)="abrirModal($event)"
-        (gestionarCaras)="gestionarCaras($event)">
-      </app-individuo>
+    <!-- Formulario agregar -->
+    <div class="card p-3 mb-3">
+      <h3>Agregar un nuevo individuo</h3>
+      <input type="text" class="form-control mb-2" placeholder="Nombre" [(ngModel)]="individuoNuevo.nombre">
+      <input type="text" class="form-control mb-2" placeholder="Apellido 1" [(ngModel)]="individuoNuevo.apellido1">
+      <input type="text" class="form-control mb-2" placeholder="Apellido 2" [(ngModel)]="individuoNuevo.apellido2">
+      <input type="file" class="form-control mb-2" (change)="onFileSelected($event)">
+      <button class="btn btn-success" (click)="agregarIndividuo()">Agregar Individuo</button>
     </div>
-  </div>
+
+    <hr>
+
+    <!-- Lista de individuos -->
+    <div class="lista_individuos p-3 mb-3">
+      <h3>Lista de Individuos</h3>
+        <app-individuo class="individuo mx-2" *ngFor="let individuo of individuos" [individuo]="individuo" (eliminar)="eliminarIndividuo($event)" (editar)="abrirModal($event)"
+          (gestionarCaras)="gestionarCaras($event)">
+        </app-individuo>
+    </div>
 
 
-  <!-- Modal para editar individuo -->
-  <div class="modal fade" id="modalEditar" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Editar Individuo</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control mb-2" [(ngModel)]="individuoEditando.nombre">
-          <input type="text" class="form-control mb-2" [(ngModel)]="individuoEditando.apellido1">
-          <input type="text" class="form-control mb-2" [(ngModel)]="individuoEditando.apellido2">
-          <input type="file" class="form-control mt-2" (change)="onFileSelectedEdit($event)">
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn btn-primary" (click)="guardarEdicion()">Guardar</button>
+    <!-- Modal para editar individuo -->
+    <div class="modal fade" id="modalEditar" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Individuo</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control mb-2" [(ngModel)]="individuoEditando.nombre">
+            <input type="text" class="form-control mb-2" [(ngModel)]="individuoEditando.apellido1">
+            <input type="text" class="form-control mb-2" [(ngModel)]="individuoEditando.apellido2">
+            <input type="file" class="form-control mt-2" (change)="onFileSelectedEdit($event)">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button class="btn btn-primary" (click)="guardarEdicion()">Guardar</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>

@@ -1,0 +1,15 @@
+.individuo {
+    display: inline-block;          /* Permite que estén uno al lado del otro */
+    vertical-align: top;            /* Alineación superior para que no bailen */
+    width: max-content;             /* Se ajusta al contenido */
+    max-width: 100%;                /* Evita que rompa el layout si el contenido es grande */
+    margin: 10px;                   /* Separación entre cards */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.imagen-detectada {
+    display: block;        /* Permite centrar con margin auto */
+    margin: 0 auto;        /* Centra horizontalmente */
+    width: 50%;            /* Ancho deseado */
+    height: auto;          /* Mantiene proporción */
+}

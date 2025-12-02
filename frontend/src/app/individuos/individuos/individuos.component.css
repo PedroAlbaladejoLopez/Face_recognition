@@ -5,3 +5,14 @@ table {
 h2 {
   margin-bottom: 15px;
 }
+
+.lista_individuos{
+    display: flex;
+    flex-wrap: wrap;      /* Permite que bajen solo cuando no hay espacio */
+    gap: 10px; 
+    margin: 5%;           /* Espacio entre tarjetas */
+}
+
+.individuo {
+    width: 500px;
+}
